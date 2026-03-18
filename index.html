@@ -7,20 +7,10 @@
 <body>
 
   <h1>Portal UDEM</h1>
+  <p>Acceso al simulador</p>
 
   <!-- BOTÓN LOGIN -->
   <button onclick="login()">Iniciar sesión con Google</button>
-
-  <!-- CONTENIDO PROTEGIDO -->
-  <div id="contenido" style="display:none;">
-    <h2>Bienvenido 👋</h2>
-    <p>Acceso autorizado</p>
-
-    <a href="https://jlzer0.github.io/prueba/">Ir al simulador</a>
-
-    <br><br>
-    <button onclick="logout()">Cerrar sesión</button>
-  </div>
 
   <!-- FIREBASE -->
   <script type="module">
@@ -47,13 +37,15 @@
         const user = result.user;
 
         const email = user.email;
-        console.log("Email detectado:", email); // debug
+        console.log("Email:", email);
 
-        // 🔐 VALIDACIÓN FLEXIBLE
+        // 🔐 VALIDACIÓN UDEM
         if (email && email.toLowerCase().includes("udem.edu.mx")) {
           alert("Bienvenido " + email);
 
-          document.getElementById("contenido").style.display = "block";
+          // 🚀 REDIRECCIÓN AL SIMULADOR
+          window.location.href = "https://jlzer0.github.io/prueba/";
+          
         } else {
           alert("Solo usuarios UDEM");
           await signOut(auth);
@@ -63,12 +55,6 @@
         console.error(error);
         alert("Error en login");
       }
-    }
-
-    // LOGOUT
-    window.logout = async function () {
-      await signOut(auth);
-      location.reload();
     }
   </script>
 
