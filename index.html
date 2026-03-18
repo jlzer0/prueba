@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login UDEM</title>
+  <title>Portal UDEM</title>
 </head>
 <body>
 
@@ -11,19 +11,18 @@
   <!-- BOTÓN LOGIN -->
   <button onclick="login()">Iniciar sesión con Google</button>
 
-  <!-- CONTENIDO OCULTO -->
+  <!-- CONTENIDO PROTEGIDO -->
   <div id="contenido" style="display:none;">
     <h2>Bienvenido 👋</h2>
-    <p>Ya tienes acceso al sistema</p>
+    <p>Acceso autorizado</p>
 
-    <!-- Aquí puedes poner tu simulador o link -->
     <a href="https://jlzer0.github.io/prueba/">Ir al simulador</a>
 
     <br><br>
     <button onclick="logout()">Cerrar sesión</button>
   </div>
 
-  <!-- 🔥 FIREBASE -->
+  <!-- FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -47,8 +46,12 @@
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        if (user.email.endsWith("@udem.edu.mx")) {
-          alert("Bienvenido " + user.email);
+        const email = user.email;
+        console.log("Email detectado:", email); // debug
+
+        // 🔐 VALIDACIÓN FLEXIBLE
+        if (email && email.toLowerCase().includes("udem.edu.mx")) {
+          alert("Bienvenido " + email);
 
           document.getElementById("contenido").style.display = "block";
         } else {
